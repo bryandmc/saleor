@@ -1,9 +1,10 @@
 import ast
 import os.path
 
+
 import dj_database_url
 from django.contrib.messages import constants as messages
-
+import coinbase
 
 DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'True'))
 
@@ -26,7 +27,7 @@ SQLITE_DB_URL = 'sqlite:///' + os.path.join(PROJECT_ROOT, 'dev.sqlite')
 DATABASES = {'default': dj_database_url.config(default=SQLITE_DB_URL)}
 
 
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Los_Angeles'
 LANGUAGE_CODE = 'en-us'
 USE_I18N = True
 USE_L10N = True
@@ -138,6 +139,7 @@ INSTALLED_APPS = [
     'selectable',
     'materializecssform',
     'rest_framework',
+    'debug_toolbar',
 ]
 
 LOGGING = {
@@ -220,7 +222,20 @@ PAYMENT_BASE_URL = 'http://%s/' % CANONICAL_HOSTNAME
 PAYMENT_MODEL = 'order.Payment'
 
 PAYMENT_VARIANTS = {
-    'default': ('payments.dummy.DummyProvider', {})
+    'default': ('payments.braintree.BraintreeProvider', {
+        'merchant_id': os.environ.get("BRAINTREE_ID"),
+        'public_key': os.environ.get("BRAINTREE_PUBKEY"),
+        'private_key': os.environ.get("BRAINTREE_PRIVKEY"),
+        'sandbox': True}),
+    'coinbase': ('payments.coinbase.CoinbaseProvider', {
+        'key': os.environ.get("COINBASE_KEY"),
+        'secret': os.environ.get("COINBASE_SECRET"),
+        'endpoint': 'coinbase.com'}),
+    'paypal': ('payments.paypal.PaypalProvider', {
+        'client_id': os.environ.get("PAYPAL_ID"),
+        'secret': os.environ.get("PAYPAL_SECRET"),
+        'endpoint': 'https://api.sandbox.paypal.com',
+        'capture': False})
 }
 
 PAYMENT_HOST = os.environ.get('PAYMENT_HOST', 'localhost:8000')
@@ -229,7 +244,9 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 CHECKOUT_PAYMENT_CHOICES = [
-    ('default', 'Dummy provider')
+    ('default', 'Credit Card'),
+    ('coinbase', 'Bitcoin'),
+    ('paypal', 'Paypal')
 ]
 
 MESSAGE_TAGS = {

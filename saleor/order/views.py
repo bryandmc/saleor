@@ -59,6 +59,7 @@ def payment(request, token):
 
 @check_order_status
 def start_payment(request, order, variant):
+    print variant
     waiting_payments = order.payments.filter(status='waiting').exists()
     if waiting_payments:
         return redirect('order:payment', token=order.token)
