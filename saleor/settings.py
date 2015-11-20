@@ -4,7 +4,7 @@ import os.path
 
 import dj_database_url
 from django.contrib.messages import constants as messages
-import coinbase
+
 
 DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'True'))
 
@@ -128,8 +128,10 @@ INSTALLED_APPS = [
     'saleor.order',
     'saleor.registration',
     'saleor.dashboard',
+    'search',
 
     # External apps
+    'haystack',
     'versatileimagefield',
     'babeldjango',
     'django_prices',
@@ -140,7 +142,10 @@ INSTALLED_APPS = [
     'materializecssform',
     'rest_framework',
     'debug_toolbar',
+
+
 ]
+
 
 LOGGING = {
     'version': 1,
@@ -278,3 +283,13 @@ if AWS_MEDIA_BUCKET_NAME:
     THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://127.0.0.1:8983/solr'
+        # ...or for multicore...
+        # 'URL': 'http://127.0.0.1:8983/solr/mysite',
+    },
+}

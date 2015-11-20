@@ -76,12 +76,27 @@
             {% endif %}
 
             <hr>
-
-            <div itemprop="description">
-                {{ product.description|markdown }}
-            </div>
-
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Attribute: </th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>UPC</td>
+                  <td>234567890</td>
+                </tr>
+                <tr>
+                  <td>Vegan</td>
+                  <td>Yes</td>
+                </tr>
+            </tbody>
+            </table>
         </div>
+
+
 
         {% with images=product.images.all %}
         <div class="col-sm-6 col-sm-pull-6">
@@ -130,7 +145,54 @@
         {% endwith %}
     </div>
 </div>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Product Details
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <div itemprop="description">
+            {{ product.description|markdown }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Supplement Facts
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        Supplement details could go here..
+      </div>
+    </div>
+  </div>
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="headingThree">
+    <h4 class="panel-title">
+      <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Reviews
+      </a>
+    </h4>
+  </div>
+  <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div class="panel-body">
+      reveiws here...
+    </div>
+  </div>
+</div>
+</div>
 {% endblock outercontent %}
+
 
 {% block footer_scripts %}
     {{ block.super }}

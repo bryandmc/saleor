@@ -2,6 +2,7 @@
 {% load as_vertical_form from bootstrap %}
 {% load i18n %}
 
+
 {% block forms %}
     {% if addresses %}
         <p>{% trans "Use one of your existing addresses or enter a new address below." %}</p>
@@ -41,6 +42,7 @@
         <div class="col-sm-6">
             {% block additional_message %}{% endblock %}
 
+
             <div class="panel panel-default{% if addresses and existing_address_selected %} collapse{% endif %}" id="address-form">
                 <div class="panel-body">
                     <form method="post" class="{% if not address_book or not existing_address_selected %} in{% endif %}">
@@ -62,4 +64,3 @@
         </div>
     </div>
 {% endblock forms %}
-

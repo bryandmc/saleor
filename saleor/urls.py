@@ -13,6 +13,7 @@ from .product.urls import urlpatterns as product_urls
 from .registration.urls import urlpatterns as registration_urls
 from .userprofile.urls import urlpatterns as userprofile_urls
 from .dashboard.urls import urlpatterns as dashboard_urls
+from search.views import ProductSearchView
 
 
 admin.autodiscover()
@@ -30,7 +31,8 @@ urlpatterns = [
     url(r'^selectable/', include('selectable.urls')),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
         name='django.contrib.sitemaps.views.sitemap'),
-    url(r'', include('payments.urls'))
+    url(r'', include('payments.urls')),
+    url(r'^search/',  ProductSearchView.as_view(), name='search_view'),
 ]
 
 if settings.DEBUG:

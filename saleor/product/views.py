@@ -32,6 +32,7 @@ def product_details(request, slug, product_id):
     template_name = 'product/details_%s.html' % (
         type(product).__name__.lower(),)
     templates = [template_name, 'product/details.html']
+    print dir(product)
     return TemplateResponse(
         request, templates,
         {'product': product, 'form': form})

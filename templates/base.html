@@ -25,7 +25,7 @@
 
     <body itemscope itemtype="http://schema.org/WebPage">
         {% block header %}
-            <header class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation">
+            <header class="navbar navbar-default navbar-static-top" role="navigation">
                 <nav class="container">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -34,7 +34,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="/">Saleor</a>
+                        <a class="navbar-brand" href="/">Mission Naturals</a>
                     </div>
                     <div class="collapse navbar-collapse navbar-ex1-collapse">
                         <ul class="nav navbar-nav">
@@ -89,6 +89,7 @@
                 </nav>
             </header>
         {% endblock %}
+
         {% if messages %}
         <div class="container">
             {% for message in messages %}
@@ -99,7 +100,13 @@
             {% endfor %}
         </div>
         {% endif %}
+
+        {% block search %}
+        {% include 'search.html' %}
+        <br>
+        {% endblock %}
         <div class="container">
+
             {% block outerbreadcrumb %}
             <ul class="breadcrumb" itemprop="breadcrumb">
                 {% block breadcrumb %}
@@ -125,7 +132,7 @@
             <footer>
                 <div class="container">
                     <p class="pull-right">
-                        &copy; Mirumee Software 2015
+                        &copy; Mission Naturals
                     </p>
                 </div>
             </footer>

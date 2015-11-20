@@ -90,6 +90,9 @@ class Product(models.Model, ItemRange):
     attributes = models.ManyToManyField(
         'ProductAttribute', related_name='products', blank=True)
 
+    additional = models.CharField(
+        pgettext_lazy('Product field', 'additional'), max_length=128, blank=True)
+
     objects = ProductManager()
 
     class Meta:
