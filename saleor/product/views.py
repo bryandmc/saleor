@@ -7,14 +7,16 @@ from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 
 from .forms import get_form_class_for_product
-from .models import Product, Category
+from .models import Product, Category, Brand
 from saleor.cart import Cart
+
+from haystack.query import SearchQuerySet
 
 
 def product_details(request, slug, product_id):
     products = Product.objects.get_available_products().select_subclasses()
     products = products.prefetch_related('categories', 'images',
-                                         'variants__stock')
+                                         'variants__stock', 'attributes', 'brand')
     product = get_object_or_404(products, id=product_id)
     if product.get_slug() != slug:
         return HttpResponsePermanentRedirect(product.get_absolute_url())
@@ -33,10 +35,25 @@ def product_details(request, slug, product_id):
         type(product).__name__.lower(),)
     templates = [template_name, 'product/details.html']
     print dir(product)
+    print product.brand
+    print product.attributes.all()
     return TemplateResponse(
         request, templates,
         {'product': product, 'form': form})
 
+def brand_index(request, slug, brand_id):
+    print "Brand index"
+    brand = get_object_or_404(Brand, id=brand_id)
+    all_results = SearchQuerySet().narrow("brand:%s" % brand.name)
+    print len(all_results)
+    print all_results
+    products = Product.objects.get_available_products().filter(brand__id=brand_id)
+    print len(products)
+    print products
+    brand = get_object_or_404(Brand, id=brand_id)
+    print brand
+    template="brand/details.html"
+    return TemplateResponse(request, template, {'products': products, 'brand': brand})
 
 def category_index(request, path, category_id):
     category = get_object_or_404(Category, id=category_id)

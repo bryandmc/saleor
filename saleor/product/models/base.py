@@ -69,6 +69,29 @@ class ProductManager(InheritanceManager):
         return self.get_queryset().filter(
             Q(available_on__lte=today) | Q(available_on__isnull=True))
 
+@python_2_unicode_compatible
+class Brand(models.Model):
+    name = models.CharField(
+        pgettext_lazy('Brand field', 'name'), max_length=128)
+    slug = models.SlugField(
+        pgettext_lazy('Brand field', 'slug'), max_length=50)
+    description = models.TextField(
+        verbose_name=pgettext_lazy('Brand field', 'description'))
+
+    objects = Manager()
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('product:brand', kwargs={'slug': self.slug, 'brand_id': self.id})
+
+    def get_full_path(self):
+        return self.slug + "-" + str(self.id)
+
+    class Meta:
+        ordering = ['name']
+        app_label = 'product'
+
 
 @python_2_unicode_compatible
 class Product(models.Model, ItemRange):
@@ -76,6 +99,8 @@ class Product(models.Model, ItemRange):
         pgettext_lazy('Product field', 'name'), max_length=128)
     description = models.TextField(
         verbose_name=pgettext_lazy('Product field', 'description'))
+    item_facts = models.TextField(
+        verbose_name=pgettext_lazy('Product field', 'item_facts'))
     categories = models.ManyToManyField(
         Category, verbose_name=pgettext_lazy('Product field', 'categories'),
         related_name='products')
@@ -89,9 +114,9 @@ class Product(models.Model, ItemRange):
         pgettext_lazy('Product field', 'available on'), blank=True, null=True)
     attributes = models.ManyToManyField(
         'ProductAttribute', related_name='products', blank=True)
-
-    additional = models.CharField(
-        pgettext_lazy('Product field', 'additional'), max_length=128, blank=True)
+    brand = models.ForeignKey(Brand, related_name='products', blank=True, null=True)
+    upc = models.CharField(
+        pgettext_lazy('Product field', 'upc'), max_length=128, blank=False)
 
     objects = ProductManager()
 
@@ -169,8 +194,8 @@ class ProductVariant(models.Model, Item):
         unit=settings.DEFAULT_WEIGHT, max_digits=6, decimal_places=2,
         blank=True, null=True)
     product = models.ForeignKey(Product, related_name='variants')
-    attributes = JSONField(pgettext_lazy('Variant field', 'attributes'),
-                           default={})
+    #attributes = JSONField(pgettext_lazy('Variant field', 'attributes'),
+    #                       default={})
 
     objects = InheritanceManager()
 
@@ -223,6 +248,9 @@ class ProductVariant(models.Model, Item):
         return self.attributes.get(str(pk))
 
     def display_variant(self, attributes=None):
+        return self.name
+        '''
+        print locals()
         if attributes is None:
             attributes = self.product.attributes.all()
         values = get_attributes_display_map(self, attributes).values()
@@ -230,6 +258,7 @@ class ProductVariant(models.Model, Item):
             return ', '.join([smart_text(value) for value in values])
         else:
             return smart_text(self)
+        '''
 
     def display_product(self, attributes=None):
         return '%s (%s)' % (smart_text(self.product),

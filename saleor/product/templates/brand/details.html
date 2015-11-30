@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3> {{brand}} </h3>
+<h6> {{brand.description}} </h6>
+<hr>
+
+
+{% include 'category/_items.html' %}
+
+{% endblock %}

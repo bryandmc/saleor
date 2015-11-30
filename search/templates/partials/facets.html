@@ -1,0 +1,89 @@
+
+<dl>
+  <dt class="nav-header">Brands:</dt>
+  {% for item in facets.brand %}
+    <dd>
+      {% if item.selected %}
+          <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" checked />
+          <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" onclick='window.location.assign("{{ item.deselect_url }}")'/>
+          <a href="{{ item.deselect_url }}">{{ item.name }}</a>
+      {% else %}
+          {% if item.count == 0 %}
+              <input type="checkbox" name="{{ item.name }}" disabled />
+              {{ item.name }}
+          {% else %}
+              <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" />
+              <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" value="{{ request.get_full_path }}&amp;selected_facets=brand_exact:{{ item.key|urlencode }}" />
+              <a href="{{ request.get_full_path }}&amp;selected_facets=brand_exact:{{ item.key|urlencode }}">{{ item.name }}</a>
+          {% endif %}
+      {% endif %}
+          ({{ item.count }})
+    </dd>
+  {% endfor %}
+</dl>
+<dl>
+  <dt class="nav-header">Category:</dt>
+  {% for item in facets.category %}
+    <dd>
+      {% if item.selected %}
+          <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" checked />
+          <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" onclick='window.location.assign("{{ item.deselect_url }}")'/>
+          <a href="{{ item.deselect_url }}">{{ item.name }}</a>
+      {% else %}
+          {% if item.count == 0 %}
+              <input type="checkbox" name="{{ item.name }}" disabled />
+              {{ item.name }}
+          {% else %}
+              <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" />
+              <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" value="{{ request.get_full_path }}&amp;selected_facets=brand_exact:{{ item.key|urlencode }}" />
+              <a href="{{ request.get_full_path }}&amp;selected_facets=category_exact:{{ item.key|urlencode }}">{{ item.name }}</a>
+          {% endif %}
+      {% endif %}
+          ({{ item.count }})
+    </dd>
+  {% endfor %}
+</dl>
+<dl>
+  <dt class="nav-header">Attributes:</dt>
+  {% for item in facets.attributes %}
+    <dd>
+      {% if item.selected %}
+          <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" checked />
+          <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" onclick='window.location.assign("{{ item.deselect_url }}")'/>
+          <a href="{{ item.deselect_url }}">{{ item.name }}</a>
+      {% else %}
+          {% if item.count == 0 %}
+              <input type="checkbox" name="{{ item.name }}" disabled />
+              {{ item.name }}
+          {% else %}
+              <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" />
+              <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" value="{{ request.get_full_path }}&amp;selected_facets=brand_exact:{{ item.key|urlencode }}" />
+              <a href="{{ request.get_full_path }}&amp;selected_facets=attributes_exact:{{ item.key|urlencode }}">{{ item.name }}</a>
+          {% endif %}
+      {% endif %}
+          ({{ item.count }})
+    </dd>
+  {% endfor %}
+</dl>
+<dl>
+  <dt class="nav-header">Customer Rating:</dt>
+  {% for item in facets.rating %}
+    <dd>
+      {% if item.selected %}
+          <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" checked />
+          <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" onclick='window.location.assign("{{ item.deselect_url }}")'/>
+          <a href="{{ item.deselect_url }}">{{ item.name }}</a>
+      {% else %}
+          {% if item.count == 0 %}
+              <input type="checkbox" name="{{ item.name }}" disabled />
+              {{ item.name }}
+          {% else %}
+              <input class="facet_checkbox" type="checkbox" name="{{ item.name }}" />
+              <input class="facet_url" type="hidden" name="url_for_{{ item.name }}" value="{{ request.get_full_path }}&amp;selected_facets=brand_exact:{{ item.key|urlencode }}" />
+              <a href="{{ request.get_full_path }}&amp;selected_facets=rating_exact:{{ item.key|urlencode }}">{{ item.name }}</a>
+          {% endif %}
+      {% endif %}
+          ({{ item.count }})
+    </dd>
+  {% endfor %}
+</dl>

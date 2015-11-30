@@ -16,7 +16,7 @@ class VariantChoiceIterator(ModelChoiceIterator):
             'values') if self.product else None
 
     def choice(self, obj):
-        label = obj.display_variant(self.attributes)
+        label = obj.display_variant(obj.name)
         label += ' - ' + gross(obj.get_price())
         return (self.field.prepare_value(obj), label)
 

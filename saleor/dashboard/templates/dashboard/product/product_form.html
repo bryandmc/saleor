@@ -85,6 +85,7 @@
             <div class="col s12 l8" >
                 <div class="row">
                     {{ product_form.description|materializecss }}
+                    {{ product_form.item_facts|materializecss }}
                 </div>
             </div>
 
@@ -93,8 +94,9 @@
                     {{ product_form.weight|materializecss:"input-field s12" }}
                     {{ product_form.categories|materializecss:"input-field s12" }}
                     {{ product_form.attributes|materializecss:"input-field s12" }}
+                    {{ product_form.brand|materializecss:"input-field s12" }}
                     {{ product_form.available_on|materializecss:"input-field s12" }}
-                    {{ product_form.additional|materializecss:"input-field s12" }}
+                    {{ product_form.upc|materializecss:"input-field s12" }}
                 </div>
             </div>
 
@@ -168,11 +170,7 @@
                                                     href="{% url 'dashboard:variant-update' product_pk=product.pk variant_pk=variant.pk %}">
                                             {{ variant.sku }}
                                         </a></td>
-                                        {% for attr_display in variant|attributes_values_with_empty:attributes %}
-                                            <td>
-                                                {{ attr_display }}
-                                            </td>
-                                        {% endfor %}
+
                                         <td>{{ variant.name }}</td>
                                         <td class="right-align">{% gross variant.get_price_per_item %}</td>
                                     </tr>

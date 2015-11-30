@@ -6,6 +6,7 @@
 {% load gross from prices_i18n %}
 {% load markdown from markdown %}
 {% load price_range from price_ranges %}
+{% load ratings %}
 {% load static from staticfiles %}
 
 {% block title %}{{ product }} — {{ block.super }}{% endblock %}
@@ -24,14 +25,20 @@
 <div itemscope itemtype="http://schema.org/Product">
     <div class="row">
         <div class="col-sm-6 col-sm-push-6">
-            <h1 itemprop="name">
+            <h3 itemprop="name">
                 {{ product }}
-            </h1>
-
+            </h3>
+            {% if product.brand %}
+              <h5>by:
+                <a href="/search/?q=&amp;selected_facets=brand_exact:{{ product.brand|urlencode }}">
+                  <span itemprop="brand">{{product.brand}}</span>
+                </a>
+              </h5>
+            {% endif %}
+            <hr>
             {% if product.is_in_stock %}
                 {% with price_range=product|discounted_price_range:request.discounts undiscounted=product.get_price_range %}
                     {% with discount=undiscounted.min_price|price_difference:price_range.min_price %}
-                        <p class="lead" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                             {% if undiscounted.min_price != price_range.min_price %}
                                 <span class="price undiscounted">{% price_range undiscounted %}</span>
                                 <br>
@@ -39,9 +46,9 @@
                                 <br>
                                 <small class="label label-success">{% trans "You save" %} {% gross discount %}</small>
                             {% else %}
-                                <span class="price">{% price_range price_range %}</span>
+                                <span class="price"><h4><strong>{% price_range price_range %}</strong></h4></span>
+                                {% ratings product %}
                             {% endif %}
-                        </p>
                     {% endwith %}
                 {% endwith %}
             {% endif %}
@@ -50,7 +57,8 @@
 
             <div class="visible-xs">
                 {% if product.images.first %}
-                    <img class="img-responsive" src="{{ product.images.first.image.crop.680x680 }}" alt="">
+                    <img class="img-responsive" src="{{ product.images.first.image.crop.680x680 }}" alt="" itemprop="image">
+
                 {% else %}
                     <img src="{% static 'images/product-image-placeholder.png' %}" alt="" class="img-responsive">
                 {% endif %}
@@ -77,21 +85,19 @@
 
             <hr>
             <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Attribute: </th>
-                  <th>Value</th>
-                </tr>
-              </thead>
               <tbody>
                 <tr>
                   <td>UPC</td>
-                  <td>234567890</td>
+                  <td>
+                    <span itemprop="gtin12">{{product.upc}}</span>
+                  </td>
                 </tr>
+                {% for attrib in product.attributes.all %}
                 <tr>
-                  <td>Vegan</td>
+                  <td> {{attrib.display}}</td>
                   <td>Yes</td>
                 </tr>
+                {% endfor %}
             </tbody>
             </table>
         </div>
@@ -157,7 +163,7 @@
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
         <div itemprop="description">
-            {{ product.description|markdown }}
+            {{ product.description|safe }}
         </div>
       </div>
     </div>
@@ -172,7 +178,7 @@
     </div>
     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
       <div class="panel-body">
-        Supplement details could go here..
+        {{ product.item_facts|safe }}
       </div>
     </div>
   </div>

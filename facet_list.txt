@@ -1,0 +1,139 @@
+
+Category –
+Vitamins & Supplements (1005)
+Specialty Shops (648)
+Professional Lines (73)
+More...
+
+Specialties –
+ Alcohol Free (7)
+ Allergen Free (4)
+ BPA Free (3)
+ Casein Free (6)
+ Corn Free (213)
+ Cruelty Free (2)
+ Dairy Free (239)
+ Egg Free (252)
+ Fragrance Free (38)
+ Gluten Free (604)
+ Hypoallergenic (79)
+ Kosher (156)
+ Lactose Free (66)
+ Latex Free (1)
+ Low Sodium (7)
+ Milk Free (241)
+ Non-GMO (46)
+ Organic (16)
+ Peanut Free (137)
+ Pesticide Free (3)
+ Preservative Free (416)
+ Shellfish Free (184)
+ Soy Free (425)
+ Sugar Free (330)
+ Tree Nut Free (152)
+ Vegan (138)
+ Vegetarian (406)
+ Wheat Free (463)
+ Yeast Free (448)
+
+Brand –
+Brand Name
+Search our Brands
+  Vitacost Brand (59)
+ ARO-Vitacost (1)
+ Source Naturals (101)
+ Solgar (81)
+More...
+
+Strength –
+ 0 - 5 mg (21)
+ 5 - 100 mg (136)
+ 100 - 500 mg (221)
+ 500 - 1000 mg (125)
+ 1000+ mg (14)
+
+Form –
+ Tablets (441)
+ Capsules (324)
+ Liquid (61)
+ Lozenges (53)
+More...
+
+Servings –
+ 100 (237)
+ 60 (199)
+ 30 (102)
+ 90 (71)
+More...
+
+Flavor –
+ Cherry (26)
+ Natural Raspberry (11)
+ Orange (10)
+ Raspberry (9)
+More...
+
+Rating –
+ 5 Stars (236)
+ 4 Stars (254)
+ 3 Stars (42)
+ No Reviews (472)
+More...
+
+Price –
+ $0 - $5 (95)
+ $5 - $10 (381)
+ $10 - $20 (379)
+ $20 - $50 (147)
+ $50 - $100 (6)
+ $100+ (1)
+
+
+
+ <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+   <div class="panel panel-default">
+     <div class="panel-heading" role="tab" id="headingOne">
+       <h4 class="panel-title">
+         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+           Product Details
+         </a>
+       </h4>
+     </div>
+     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+       <div class="panel-body">
+         <div itemprop="description">
+             {{ product.description|markdown }}
+         </div>
+       </div>
+     </div>
+   </div>
+   <div class="panel panel-default">
+     <div class="panel-heading" role="tab" id="headingTwo">
+       <h4 class="panel-title">
+         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+           Supplement Facts
+         </a>
+       </h4>
+     </div>
+     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+       <div class="panel-body">
+         Supplement details could go here..
+       </div>
+     </div>
+   </div>
+ </div>
+ <div class="panel panel-default">
+   <div class="panel-heading" role="tab" id="headingThree">
+     <h4 class="panel-title">
+       <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+         Reviews
+       </a>
+     </h4>
+   </div>
+   <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+     <div class="panel-body">
+       reveiws here...
+     </div>
+   </div>
+ </div>
+ </div>

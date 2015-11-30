@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block search %}
+  {% include 'search_result.html' %}
+  <br>
+{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="col-md-2 hidden-xs">
+      {% include 'partials/facets.html' %}
+    </div>
+    <div class="col-md-10">
+      {% if query %}
+        <h3>Results for: "{{query}}"</h3>
+      {% endif %}
+
+      {% include 'category/_items.html' %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

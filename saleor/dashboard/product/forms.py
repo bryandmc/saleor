@@ -53,6 +53,8 @@ class ProductForm(forms.ModelForm):
             'data-placeholder'] = pgettext_lazy('Product form labels', 'Search')
         self.fields['attributes'].widget.attrs[
             'data-placeholder'] = pgettext_lazy('Product form labels', 'Search')
+        self.fields['brand'].widget.attrs[
+            'data-placeholder'] = pgettext_lazy('Product form labels', 'Search')
         if self.instance.available_on:
             self.fields['available_on'].widget.attrs[
                 'datavalue'] = self.instance.available_on.strftime('%Y/%m/%d')

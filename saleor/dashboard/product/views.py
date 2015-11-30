@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_http_methods
 
 from ...product.models import Product, ProductImage, Stock, ProductAttribute, \
-    ProductVariant
+    ProductVariant, Brand
 from ..utils import paginate
 from ..views import staff_member_required
 from . import forms
@@ -44,6 +44,7 @@ def product_edit(request, pk):
         Product.objects.select_subclasses().prefetch_related(
             'images', 'variants'), pk=pk)
     attributes = product.attributes.prefetch_related('values')
+    brands = Brand.objects.all()
     images = product.images.all()
     variants = product.variants.select_subclasses()
     stock_items = Stock.objects.filter(
@@ -178,11 +179,11 @@ def variant_edit(request, product_pk, variant_pk=None):
         variant = ProductVariant(product=product)
     form = forms.ProductVariantForm(request.POST or None, instance=variant,
                                     initial=form_initial)
-    attribute_form = forms.VariantAttributeForm(request.POST or None,
-                                                instance=variant)
-    if all([form.is_valid(), attribute_form.is_valid()]):
+    #attribute_form = forms.VariantAttributeForm(request.POST or None,
+    #                                            instance=variant)
+    if all([form.is_valid()]):
         form.save()
-        attribute_form.save()
+        #attribute_form.save()
         if variant_pk:
             msg = _('Updated variant %s') % variant.name
         else:
@@ -191,7 +192,7 @@ def variant_edit(request, product_pk, variant_pk=None):
         success_url = request.POST['success_url']
         if is_safe_url(success_url, request.get_host()):
             return redirect(success_url)
-    ctx = {'attribute_form': attribute_form, 'form': form, 'product': product,
+    ctx = {'form': form, 'product': product,
            'variant': variant}
     return TemplateResponse(request, 'dashboard/product/variant_form.html', ctx)
 

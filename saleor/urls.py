@@ -33,6 +33,7 @@ urlpatterns = [
         name='django.contrib.sitemaps.views.sitemap'),
     url(r'', include('payments.urls')),
     url(r'^search/',  ProductSearchView.as_view(), name='search_view'),
+    url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
 ]
 
 if settings.DEBUG:

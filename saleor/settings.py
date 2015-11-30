@@ -56,6 +56,7 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder'
 ]
 
+
 context_processors = [
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
@@ -142,6 +143,7 @@ INSTALLED_APPS = [
     'materializecssform',
     'rest_framework',
     'debug_toolbar',
+    'star_ratings',
 
 
 ]

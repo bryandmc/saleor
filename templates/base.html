@@ -3,9 +3,13 @@
 {% load staticfiles %}
 
 <html lang="en" class="no-js">
-    <head>
-        <title>{% block title %}Saleor{% endblock %}</title>
+  <head itemscope itemtype="http://schema.org/WebSite">
+    <title itemprop='name'>Mission Naturals</title>
+    <link rel="canonical" href="https://missionnaturals.com/" itemprop="url">
+
+        <title>{% block title %}Mission Naturals{% endblock %}</title>
         {% block meta %}
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="{% block meta_description %}{% endblock %}">
@@ -14,6 +18,8 @@
 
         <script src="{% static "js/storefront_head.js" %}"></script>
         <link rel="stylesheet" type="text/css" href="{% static "css/storefront.css" %}">
+        <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+        <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
 
         {% block stylesheet %}{% endblock stylesheet %}
 
@@ -36,16 +42,39 @@
                         </button>
                         <a class="navbar-brand" href="/">Mission Naturals</a>
                     </div>
-                    <div class="collapse navbar-collapse navbar-ex1-collapse">
-                        <ul class="nav navbar-nav">
-                            {% for category in categories %}
-                                <li>
-                                    <a href="{{ category.get_absolute_url }}">
-                                        {{ category }}
-                                    </a>
+                  		<ul class="nav navbar-nav">
+                        {% for category in categories %}
+                  			<li class="dropdown dropdown-large">
+
+                  				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{category.name|wordwrap:0}}<b class="caret"></b></a>
+
+                  				<ul class="dropdown-menu dropdown-menu-large row">
+
+                            <li class="dropdown-header">
+                              <h6>{{category.description}}<a href="{{ category.get_absolute_url }}"> <strong>... Browse "{{category}}"</strong></a></h6>
+                            </li>
+                            <li class="divider"></li>
+                            {% for sub_category in category.get_children|slice:":12" %}
+                  					<li class="col-sm-3">
+                  						<ul>
+                  							<li class="dropdown-header">
+                                  <strong>{{sub_category}}:</strong>
                                 </li>
+                                {% for sub_sub in sub_category.get_children|slice:":3" %}
+                  							       <li><a href="{{ sub_sub.get_absolute_url }}">{{sub_sub}}</a></li>
+                                {% endfor %}
+                                <li><a href="{{ sub_category.get_absolute_url }}"><strong>more...</strong></a></li>
+                  						</ul>
+                  					</li>
                             {% endfor %}
-                        </ul>
+                  				</ul>
+
+                  			</li>
+                        {% endfor %}
+                  		</ul>
+
+
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="{% url "cart:index" %}"><i class="fa fa-shopping-cart"></i> {% trans "Shopping cart" %} {% if request.cart %}<span class="badge">{{ request.cart.count }}</span>{% endif %} <b class="caret"></b></a>
@@ -129,13 +158,15 @@
             {% endblock outercontent %}
         </div>
         {% block footer %}
-            <footer>
-                <div class="container">
-                    <p class="pull-right">
-                        &copy; Mission Naturals
-                    </p>
-                </div>
-            </footer>
+        <footer class="footer">
+          <div class="container">
+            <p class="text-muted">
+              <p class="pull-right">
+                &copy; Mission Naturals
+              </p>
+            </p>
+          </div>
+        </footer>
         {% endblock %}
         {% block footer_scripts %}
             <script src="{% static "js/storefront.js" %}"></script>
