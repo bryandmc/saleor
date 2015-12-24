@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load as_vertical_form from bootstrap %}
+
+
+{% block search %} {% endblock search %}
+
+
+
+{% block outercontent %}
+
+{% block content %}
+<h3>What did you think of this product?</h3>
+<form role="form" class="product-form form-vertical" method="post" action="?next={{request.GET.next}}">
+    {% csrf_token %}
+    {{ form|as_vertical_form }}
+    <div class="form-group">
+        <button class="btn btn-lg btn-block btn-primary"> Submit
+        </button>
+    </div>
+</form>
+{% endblock content %}
+
+{% endblock outercontent %}

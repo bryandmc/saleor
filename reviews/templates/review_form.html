@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load as_vertical_form from bootstrap %}
+
+{% block search %} {% endblock search %}
+
+
+
+{% block outercontent %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Create" />
+</form>
+{% enblock content %}
+
+{% endblock outercontent %}
